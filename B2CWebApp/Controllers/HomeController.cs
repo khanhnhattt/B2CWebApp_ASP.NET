@@ -1,6 +1,7 @@
 ﻿using B2CWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace B2CWebApp.Controllers
 {
@@ -15,6 +16,8 @@ namespace B2CWebApp.Controllers
 
         public IActionResult Index()
         {
+            B2cContext context = new B2cContext();
+            ViewData["products"] = context.Products.ToList();
             return View();
         }
 

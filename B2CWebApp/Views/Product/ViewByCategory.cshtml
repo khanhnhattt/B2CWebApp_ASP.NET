@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "ViewByCategory";
+}
+
+<h1>ViewByCategory</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                ProductType
+            </th>
+            <th>
+                Stocks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.products)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.ProductType
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    @*                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
