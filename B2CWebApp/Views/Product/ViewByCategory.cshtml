@@ -2,11 +2,26 @@
     ViewData["Title"] = "ViewByCategory";
 }
 
-<h1>ViewByCategory</h1>
+<h1 class="text-center">@ViewBag.category</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<div class="products-wrapper">
+    <div class="product-grid">
+        <div class="item-grid row justify-content-between">
+            @foreach (var item in ViewBag.products)
+            {
+                <div class="col-md-3 text-center card">
+                    <img class="img-fluid" src="../Contents/14p.jpg" alt="iPhone 14 Pro"/>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Price</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -44,7 +59,6 @@
                     @item.ProductType
                 </td>
                 <td>
-
                 </td>
                 <td>
                     @*                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

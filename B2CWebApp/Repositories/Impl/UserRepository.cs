@@ -12,7 +12,6 @@ namespace B2CWebApp.Repositories.Impl
 
         public User findUserByUsernameAndPassword(string username, string password)
         {
-            //List<User> users = _context.Users.ToList();
             User user = _context.Users.First(u => u.Username == username);
             if (user != null && password.Equals(user.Password))
             {

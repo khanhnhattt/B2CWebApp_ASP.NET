@@ -5,8 +5,8 @@ namespace B2CWebApp.Services
 {
     public interface IAuthService
     {
-        bool checkUserExist(LoginDTO loginDto);
-        string generateToken(string username);
+        User checkUserExist(LoginDTO loginDto);
+        string generateToken(User user);
         string addUser(User user);
     }
 }

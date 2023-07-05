@@ -7,26 +7,39 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/B2CWebApp.styles.css" asp-append-version="true" />
+    <style>
+        .category:hover {
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+            <div class="container-fluid" style=" padding: 0 500px">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">B2CWebApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <form action="/Product/Search">
+                    <div class="input-group navbar-collapse collapse">
+                        <div class="form-outline">
+                            <input type="search" id="product" class="form-control" name="search"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="2">PC</a>
+                            <a class="nav-link text-dark">0849.070.802</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="1">Laptop</a>
+                            <a class="nav-link text-dark">Store</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="3">Tablet</a>
+                            <a class ="nav-link text-dark">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -38,6 +51,29 @@
                     </ul>
                 </div>
             </div>
+        </nav>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid" style=" padding: 0 500px">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 justify-content-center justify-content-around">
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="1">iPhone</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="2">iPad</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="3">Macbook</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="4">Watch</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="5">Accessories</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
         </nav>
     </header>
     <div class="container">

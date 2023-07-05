@@ -21,32 +21,26 @@ namespace B2CWebApp.Services.Impl
             _userRepository = userRepository;
         }
 
-        public bool checkUserExist(LoginDTO loginDto)
+        public User checkUserExist(LoginDTO loginDto)
         {
             User user = _userRepository.findUserByUsernameAndPassword(loginDto.Username, loginDto.Password);
-            if (user == null) { return false; }
-            return true;
+            if (user == null) { return null; }
+            return user;
         }
 
-        public string generateToken(string username)
+        public string generateToken(User user)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, username)
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature)
-            };
+            var token = new JwtSecurityToken(
+                _configuration["JwtSettings:ValidIssuer"],
+                _configuration["JwtSettings:ValidAudience"],
+                null, 
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: credentials);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return tokenHandler.WriteToken(token);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public string addUser(User user)

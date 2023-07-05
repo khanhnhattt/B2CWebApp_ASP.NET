@@ -4,6 +4,7 @@ using B2CWebApp.Models;
 using B2CWebApp.Services;
 using B2CWebApp.Services.Impl;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,21 +28,22 @@ namespace B2CWebApp.Controllers
         }
 
         // POST Login
+        [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login(LoginDTO loginDto)
         {
 
-            bool checkUser = _authService.checkUserExist(loginDto);
+            User user = _authService.checkUserExist(loginDto);
 
-            if (!checkUser)
+            if (user ==null)
             {
                 ViewData["msg"] = "Invalid Username or Password";
                 return View("Login");
             }
             else
             {
-                var token = _authService.generateToken(loginDto.Username);
-                return RedirectToAction("Index", "Home", new { token });
+                var token = _authService.generateToken(user);
+                return RedirectToAction("Index", "Home", new { token = token });
             }
         }
 
