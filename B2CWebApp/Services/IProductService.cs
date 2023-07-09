@@ -7,5 +7,7 @@ namespace B2CWebApp.Services
         List<ProductsViewModel> findByCategory(string cat);
         string findNameById(string cate);
         List<ProductsViewModel> search(string search);
+        ProductDetailViewModel findById(long id);
+        void AddToCart(long productId, int quantity, string UserId);
     }
 }

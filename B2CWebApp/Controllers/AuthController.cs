@@ -42,8 +42,8 @@ namespace B2CWebApp.Controllers
             }
             else
             {
-                var token = _authService.generateToken(user);
-                return RedirectToAction("Index", "Home", new { token = token });
+                HttpContext.Session.SetString("u", user.Id.ToString());
+                return RedirectToAction("Index", "Home");
             }
         }
 

@@ -7,9 +7,9 @@ public partial class ProductImage
 {
     public long Id { get; set; }
 
-    public string ImgPath { get; set; }
-
     public long? ProductId { get; set; }
+
+    public string ImgPath { get; set; }
 
     public virtual Product Product { get; set; }
 }

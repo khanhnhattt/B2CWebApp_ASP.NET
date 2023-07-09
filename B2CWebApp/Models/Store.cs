@@ -12,4 +12,6 @@ public partial class Store
     public string Name { get; set; }
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+
+    public virtual ICollection<ProductStore> ProductStores { get; set; } = new List<ProductStore>();
 }

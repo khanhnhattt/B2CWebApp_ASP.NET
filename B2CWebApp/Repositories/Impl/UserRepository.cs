@@ -28,5 +28,15 @@ namespace B2CWebApp.Repositories.Impl
             _context.Users.Add(user);
             _context.SaveChanges();
         }
+
+        public User findUserById(long v)
+        {
+            User user = _context.Users.FirstOrDefault(u => u.Id == v);
+            if (user != null)
+            {
+                return user;
+            }
+            return null;
+        }
     }
 }

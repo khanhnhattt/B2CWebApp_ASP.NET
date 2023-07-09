@@ -5,17 +5,17 @@ namespace B2CWebApp.Models;
 
 public partial class Cart
 {
-    public long Id { get; set; }
-
-    public long Price { get; set; }
-
     public int Quantity { get; set; }
+
+    public long Id { get; set; }
 
     public long? OrderId { get; set; }
 
+    public long Price { get; set; }
+
     public long ProductId { get; set; }
 
-    public long StoreId { get; set; }
+    public long? StoreId { get; set; }
 
     public long UserId { get; set; }
 

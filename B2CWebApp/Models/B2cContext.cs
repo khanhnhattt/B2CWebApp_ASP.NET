@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using B2CWebApp.ViewModel;
 
 namespace B2CWebApp.Models;
 
@@ -26,9 +25,9 @@ public partial class B2cContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<ProductImage> ProductImages { get; set; }
+    public virtual DbSet<ProductCapacity> ProductCapacities { get; set; }
 
-    public virtual DbSet<ProductOrder> ProductOrders { get; set; }
+    public virtual DbSet<ProductImage> ProductImages { get; set; }
 
     public virtual DbSet<ProductStore> ProductStores { get; set; }
 
@@ -48,14 +47,10 @@ public partial class B2cContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;database=b2c;uid=root;pwd=123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
+        => optionsBuilder.UseMySQL("Server=localhost;Database=b2c;Uid=root;Pwd=123456;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .UseCollation("utf8mb4_0900_ai_ci")
-            .HasCharSet("utf8mb4");
-
         modelBuilder.Entity<Cart>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
@@ -89,7 +84,6 @@ public partial class B2cContext : DbContext
 
             entity.HasOne(d => d.Store).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.StoreId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKfobm82gm795x3foq6tvupdrqk");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
@@ -104,19 +98,12 @@ public partial class B2cContext : DbContext
 
             entity.ToTable("feedback");
 
-            entity.HasIndex(e => e.ProductOrderId, "UK_8mk7vn9uquaow7ayxvxmx9lun").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content)
                 .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("content");
-            entity.Property(e => e.ProductOrderId).HasColumnName("product_order_id");
             entity.Property(e => e.Rating).HasColumnName("rating");
-
-            entity.HasOne(d => d.ProductOrder).WithOne(p => p.Feedback)
-                .HasForeignKey<Feedback>(d => d.ProductOrderId)
-                .HasConstraintName("FKewti0274i77rctovnjx1r8dnp");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -143,9 +130,6 @@ public partial class B2cContext : DbContext
             entity.Property(e => e.ShippingStatus)
                 .HasColumnType("enum('CANCELLED','DELIVERED','DELIVERING','PROCESSING')")
                 .HasColumnName("shipping_status");
-            entity.Property(e => e.Status)
-                .HasColumnType("enum('CHART','ORDER')")
-                .HasColumnName("status");
             entity.Property(e => e.Tel)
                 .HasMaxLength(255)
                 .HasColumnName("tel");
@@ -197,12 +181,14 @@ public partial class B2cContext : DbContext
 
             entity.HasIndex(e => e.ProductTypeId, "FKlabq3c2e90ybbxk58rc48byqo");
 
+            entity.HasIndex(e => e.ProductCapacityId, "capacity_idx");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Available)
+                .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)")
                 .HasColumnName("available");
             entity.Property(e => e.Description)
-                .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("description");
             entity.Property(e => e.Name)
@@ -210,12 +196,35 @@ public partial class B2cContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("name");
             entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.ProductCapacityId).HasColumnName("product_capacity_id");
             entity.Property(e => e.ProductTypeId).HasColumnName("product_type_id");
+
+            entity.HasOne(d => d.ProductCapacity).WithMany(p => p.Products)
+                .HasForeignKey(d => d.ProductCapacityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("capacity");
 
             entity.HasOne(d => d.ProductType).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ProductTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKlabq3c2e90ybbxk58rc48byqo");
+        });
+
+        modelBuilder.Entity<ProductCapacity>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("product_capacity");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Capacity)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("capacity");
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("name");
         });
 
         modelBuilder.Entity<ProductImage>(entity =>
@@ -238,43 +247,17 @@ public partial class B2cContext : DbContext
                 .HasConstraintName("FK6oo0cvcdtb6qmwsga468uuukk");
         });
 
-        modelBuilder.Entity<ProductOrder>(entity =>
+        modelBuilder.Entity<ProductStore>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("product_order");
+            entity.ToTable("product_store");
 
-            entity.HasIndex(e => e.ProductId, "FK14dhgqh93qgfxwhe7cifylif7");
+            entity.HasIndex(e => e.ProductId, "FK92v519we6ha4h8lq8a0lctlb3");
 
-            entity.HasIndex(e => e.OrderId, "FKk8kuouetdsco7gw3g2vbgoq0v");
+            entity.HasIndex(e => e.StoreId, "FKpgqd352fxa0lqtu3s79w2rqe4");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.OrderId).HasColumnName("order_id");
-            entity.Property(e => e.Price).HasColumnName("price");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.ProductOrders)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FKk8kuouetdsco7gw3g2vbgoq0v");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.ProductOrders)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK14dhgqh93qgfxwhe7cifylif7");
-        });
-
-        modelBuilder.Entity<ProductStore>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("product_store");
-
-            entity.HasIndex(e => e.ProductId, "FK5ixdrvrn9b8v6gwrws3s3brsf");
-
-            entity.HasIndex(e => e.StoreId, "FK6ofo19q4q8aqicf2tifxv91et");
-
             entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.StoreId).HasColumnName("store_id");
@@ -282,15 +265,15 @@ public partial class B2cContext : DbContext
                 .HasMaxLength(6)
                 .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Product).WithMany()
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductStores)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK5ixdrvrn9b8v6gwrws3s3brsf");
+                .HasConstraintName("FK92v519we6ha4h8lq8a0lctlb3");
 
-            entity.HasOne(d => d.Store).WithMany()
+            entity.HasOne(d => d.Store).WithMany(p => p.ProductStores)
                 .HasForeignKey(d => d.StoreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK6ofo19q4q8aqicf2tifxv91et");
+                .HasConstraintName("FKpgqd352fxa0lqtu3s79w2rqe4");
         });
 
         modelBuilder.Entity<ProductType>(entity =>
@@ -431,6 +414,4 @@ public partial class B2cContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-    public DbSet<B2CWebApp.ViewModel.ProductsViewModel>? ProductsViewModel { get; set; }
 }

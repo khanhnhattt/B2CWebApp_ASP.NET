@@ -34,5 +34,31 @@ namespace B2CWebApp.Controllers
             ViewBag.products = products; 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            long productId = long.Parse(id);
+            ProductDetailViewModel product = _productService.findById(productId);
+            ViewBag.product = product;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddToCart(IFormCollection collection)
+        {
+            long productId = long.Parse(collection["id"]);
+            int quantity = int.Parse(collection["quantity"]);
+
+            // Check for logged in
+            string userId = HttpContext.Session.GetString("u");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            _productService.AddToCart(productId, quantity, userId);
+            return RedirectToAction();
+        }
     }
 }

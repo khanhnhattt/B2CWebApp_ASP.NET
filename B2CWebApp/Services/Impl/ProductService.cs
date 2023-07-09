@@ -1,4 +1,5 @@
-﻿using B2CWebApp.Repositories;
+﻿using B2CWebApp.Models;
+using B2CWebApp.Repositories;
 using B2CWebApp.ViewModel;
 using Microsoft.VisualBasic.CompilerServices;
 
@@ -6,7 +7,10 @@ namespace B2CWebApp.Services.Impl
 {
     public class ProductService : IProductService
     {
+        B2cContext _context = new B2cContext();
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ICartRepository _cartRepository;
 
         public ProductService(IProductRepository productRepository)
         {
@@ -27,6 +31,16 @@ namespace B2CWebApp.Services.Impl
             return category;
         }
 
+        public ProductDetailViewModel findById(long id)
+        {
+            ProductDetailViewModel product = _productRepository.FindById(id);
+            if (product == null)
+            {
+                return null;
+            }
+            return product;
+        }
+
         public List<ProductsViewModel> search(string search)
         {
             List<ProductsViewModel> productsViewModels = _productRepository.Search(search);
@@ -35,6 +49,49 @@ namespace B2CWebApp.Services.Impl
                 return null;
             }
             return productsViewModels;
+        }
+
+        public void AddToCart(long productId, int quantity, string userId)
+        {
+            long uId = long.Parse(userId);
+            User user = _context.Users.Find(uId);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            Product product = _productRepository.FindProductById(productId);
+
+            long price = product.Price*quantity;
+
+            //Cart cart = _cartRepository.FindByUserAndProduct(user.Id, product.Id);
+            Cart cart = (Cart)_context.Carts.Where(c => c.UserId == user.Id && c.ProductId == productId).FirstOrDefault();
+
+            if (cart == null)
+            {
+                Cart c = new Cart()
+                {
+                    Price = price,
+                    Quantity = quantity,
+                    ProductId = productId,
+                    UserId = user.Id
+                };
+                _context.Carts.Add(c);
+                _context.SaveChanges();
+            }
+            else
+            {
+                price += cart.Price;
+                cart.Price = price;
+
+                int oldQuantity = cart.Quantity;
+                cart.Quantity = quantity+oldQuantity;
+
+                _context.Carts.Update(cart);
+                _context.SaveChanges();
+            }
+
         }
     }
 }

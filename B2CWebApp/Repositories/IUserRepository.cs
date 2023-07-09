@@ -6,5 +6,6 @@ namespace B2CWebApp.Repositories
     {
         User findUserByUsernameAndPassword(string username, string password);
         void add(User user);
+        User findUserById(long v);
     }
 }

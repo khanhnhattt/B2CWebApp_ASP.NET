@@ -9,63 +9,14 @@
         <div class="item-grid row justify-content-between">
             @foreach (var item in ViewBag.products)
             {
-                <div class="col-md-3 text-center card">
-                    <img class="img-fluid" src="../Contents/14p.jpg" alt="iPhone 14 Pro"/>
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Price</p>
-                    </div>
-                </div>
+                <a class="text-decoration-none col-md-3 text-center card" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                        <img class="img-fluid" src="../Contents/14p.jpg" alt="iPhone 14 Pro" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">@item.Price</p>
+                        </div>
+                </a>
             }
         </div>
     </div>
 </div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                ProductType
-            </th>
-            <th>
-                Stocks
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewBag.products)
-        {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Description
-                </td>
-                <td>
-                    @item.Price
-                </td>
-                <td>
-                    @item.ProductType
-                </td>
-                <td>
-                </td>
-                <td>
-                    @*                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
