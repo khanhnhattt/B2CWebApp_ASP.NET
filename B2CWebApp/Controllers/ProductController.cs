@@ -32,12 +32,14 @@ namespace B2CWebApp.Controllers
                 return View();
             }
             ViewBag.products = products; 
+            ViewBag.search = search;
             return View();
         }
 
         [HttpGet]
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, string? cf)
         {
+            if (cf !=null ) { ViewBag.cf = cf; }
             long productId = long.Parse(id);
             ProductDetailViewModel product = _productService.findById(productId);
             ViewBag.product = product;
@@ -58,7 +60,37 @@ namespace B2CWebApp.Controllers
             }
 
             _productService.AddToCart(productId, quantity, userId);
-            return RedirectToAction();
+            return RedirectToAction("Details", "Product", new { id = productId, cf = "Added to Cart" });
+        }
+
+        public IActionResult DecreaseOneInCart(string id) 
+        {
+            long productId = long.Parse(id);
+            int quantity = -1;
+
+            // Check for logged in
+            string userId = HttpContext.Session.GetString("u");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            _productService.AddToCart(productId, quantity, userId);
+            return RedirectToAction("ViewCart", "Cart");
+        }
+
+        public IActionResult IncreaseOneInCart(string id)
+        {
+            long productId = long.Parse(id);
+            int quantity = 1;
+
+            // Check for logged in
+            string userId = HttpContext.Session.GetString("u");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            _productService.AddToCart(productId, quantity, userId);
+            return RedirectToAction("ViewCart", "Cart");
         }
     }
 }

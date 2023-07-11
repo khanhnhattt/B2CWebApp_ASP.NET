@@ -6,7 +6,13 @@
     
 </div>
 
-@foreach (var p in ViewBag.products)
+@foreach (var item in ViewBag.products)
 {
-    <p>Product: @p.Name</p>
+    <a class="text-decoration-none col-md-3 text-center card mb-2" style="color:black" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+        <img class="img-fluid" src="@item.ImgPath" alt="product image" style="width:250px; height:250px; padding:1rem" />
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">$@item.Price</p>
+        </div>
+    </a>
 }

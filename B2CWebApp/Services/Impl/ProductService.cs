@@ -64,7 +64,7 @@ namespace B2CWebApp.Services.Impl
             long price = product.Price*quantity;
 
             //Cart cart = _cartRepository.FindByUserAndProduct(user.Id, product.Id);
-            Cart cart = (Cart)_context.Carts.Where(c => c.UserId == user.Id && c.ProductId == productId).FirstOrDefault();
+            Cart cart = (Cart)_context.Carts.Where(c => c.UserId == user.Id && c.ProductId == productId && c.OrderId==null).FirstOrDefault();
 
             if (cart == null)
             {
@@ -86,8 +86,17 @@ namespace B2CWebApp.Services.Impl
                 int oldQuantity = cart.Quantity;
                 cart.Quantity = quantity+oldQuantity;
 
-                _context.Carts.Update(cart);
-                _context.SaveChanges();
+                if (cart.Quantity > 0)
+                {
+                    _context.Carts.Update(cart);
+                    _context.SaveChanges();
+                }
+                else
+                { 
+                    _context.Carts.Remove(cart);
+                    _context.SaveChanges(); 
+                }
+                
             }
 
         }

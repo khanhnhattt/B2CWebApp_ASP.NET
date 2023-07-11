@@ -1,5 +1,6 @@
 ﻿using B2CWebApp.Models;
 using B2CWebApp.Models.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace B2CWebApp.Repositories.Impl
@@ -14,7 +15,7 @@ namespace B2CWebApp.Repositories.Impl
 
         public List<ProductsViewModel> FindByCategoryId(long catId)
         {
-            List<Product> products = _context.Products.Where(p => p.ProductTypeId == catId).ToList();
+            List<Product> products = _context.Products.Include(p => p.ProductImages).Where(p => p.ProductTypeId == catId).ToList();
             List<ProductsViewModel> productsViewModel = new List<ProductsViewModel>();
             foreach (var p in products)
             {
@@ -36,7 +37,8 @@ namespace B2CWebApp.Repositories.Impl
                     Name = p.Name,
                     Price = p.Price,
                     ProductType = productTypeName,
-                    Stocks = stocks
+                    Stocks = stocks,
+                    ImgPath = p.ProductImages.FirstOrDefault(c => c == c).ImgPath
                 });
             }
             return productsViewModel;
@@ -106,7 +108,7 @@ namespace B2CWebApp.Repositories.Impl
 
         public List<ProductsViewModel> Search(string search)
         {
-            List<Product> products = _context.Products.Where(p => p.Name.Contains(search)).ToList();
+            List<Product> products = _context.Products.Include(p => p.ProductImages).Where(p => p.Name.Contains(search)).ToList();
             if (products == null)
             {
                 return null;
@@ -132,7 +134,8 @@ namespace B2CWebApp.Repositories.Impl
                     Name = p.Name,
                     Price = p.Price,
                     ProductType = productTypeName,
-                    Stocks = stocks
+                    Stocks = stocks,
+                    ImgPath = p.ProductImages.FirstOrDefault(c => c == c).ImgPath
                 });
             }
             return productsViewModel;

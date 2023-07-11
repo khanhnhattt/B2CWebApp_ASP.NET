@@ -8,6 +8,7 @@
         public string ProductName { get; set; }
         public string ProductImage { get; set; }
         public string ProductType { get; set; }
+        public long ProductId { get; set; } 
 
         public string? Capacity { get; set; }
 

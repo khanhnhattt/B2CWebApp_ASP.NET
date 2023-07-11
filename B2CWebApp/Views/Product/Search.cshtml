@@ -4,57 +4,26 @@
     ViewData["Title"] = "Search";
 }
 
-<h1>Search</h1>
+<h1>Search for @ViewBag.search</h1>
 
-@if(ViewBag.msg == null)
+@if (ViewBag.msg == null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    ProductType
-                </th>
-                <th>
-                    Stocks
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in ViewBag.products)
-            {
-                <tr>
-                    <td>
-                        @item.Name
-                    </td>
-                    <td>
-                        @item.Description
-                    </td>
-                    <td>
-                        @item.Price
-                    </td>
-                    <td>
-                        @item.ProductType
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        @*                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+    <div class="products-wrapper">
+        <div class="product-grid">
+            <div class="item-grid row d-flex justify-content-between">
+                @foreach (var item in ViewBag.products)
+                {
+                    <a class="text-decoration-none col-md-3 text-center card mb-2" style="color:black" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                        <img class="img-fluid" src="@item.ImgPath" alt="product image" style="width:250px; height:250px; padding:1rem" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">$@item.Price</p>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
 }
+
 <p>@ViewBag.msg</p>

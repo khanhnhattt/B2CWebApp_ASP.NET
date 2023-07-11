@@ -21,9 +21,9 @@
                             <div class="row">@c.ProductName</div>
                         </div>
                         <div class="col">
-                            <a href="#">-</a><a href="#" class="border">@c.Quantity</a><a href="#">+</a>
+                            <a asp-action="DecreaseOneInCart" asp-controller="Product" asp-route-id="@c.ProductId">-</a><a href="#" class="border">@c.Quantity</a><a asp-action="IncreaseOneInCart" asp-controller="Product" asp-route-id="@c.ProductId">+</a>
                         </div>
-                        <div class="col">$ @c.Price.00 <span class="close">&#10005;</span></div>
+                        <div class="col">$ @c.Price.00</div>
                     </div>
                 </div>
                 totalPrice += c.Price;

@@ -21,13 +21,6 @@ namespace B2CWebApp.Services.Impl
             _userRepository = userRepository;
         }
 
-        public User checkUserExist(LoginDTO loginDto)
-        {
-            User user = _userRepository.findUserByUsernameAndPassword(loginDto.Username, loginDto.Password);
-            if (user == null) { return null; }
-            return user;
-        }
-
         public string generateToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
@@ -56,6 +49,13 @@ namespace B2CWebApp.Services.Impl
             }
 
 
+        }
+
+        public User checkUserExist(LoginDTO loginDto)
+        {
+            User user = _userRepository.findUserByUsernameAndPassword(loginDto.Username, loginDto.Password);
+            if (user == null) { return null; }
+            return user;
         }
     }
 }

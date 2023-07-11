@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using B2CWebApp.Models.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace B2CWebApp.Controllers
 {
@@ -17,7 +19,23 @@ namespace B2CWebApp.Controllers
         public IActionResult Index()
         {
             B2cContext context = new B2cContext();
-            ViewData["products"] = context.Products.ToList();
+            List<HomeViewModel> list = new List<HomeViewModel>();
+            
+            List<ProductType> productTypes = context.ProductTypes.Include(pt => pt.Products).ToList();
+
+            foreach (ProductType productType in productTypes)
+            {
+                foreach
+
+                list.Add(new HomeViewModel
+                {
+                    ProductTypeId = productType.Id, 
+                    ProductName = productType.Products.,
+                    ProductTypeName = productType.Name,
+
+                });
+            }
+
             return View();
         }
 

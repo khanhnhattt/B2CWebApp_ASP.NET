@@ -12,5 +12,7 @@ namespace B2CWebApp.Models.ViewModel
 
         [NotMapped]
         public Dictionary<string, int?> Stocks { get; set; }
+
+        public string ImgPath { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace B2CWebApp.Services.Impl
 
             foreach (var c in carts)
             {
-                Product product = _context.Products.FirstOrDefault(p => p.Id == c.ProductId);
+                Product product = _context.Products.Include(p => p.ProductImages).FirstOrDefault(p => p.Id == c.ProductId);
                 CartViewModel cartViewModel = new CartViewModel()
                 {
                     CartId = c.Id,
@@ -38,7 +38,8 @@ namespace B2CWebApp.Services.Impl
                     ProductName = product.Name,
                     Quantity = c.Quantity,
                     ProductType = _context.ProductTypes.Find(product.ProductTypeId).Name,
-                    //ProductImage = product.ProductImages.FirstOrDefault(c => c == c).ImgPath
+                    ProductImage = product.ProductImages.FirstOrDefault(c => c == c).ImgPath,
+                    ProductId = product.Id
                 };
                 cartViewModels.Add(cartViewModel);
             }
@@ -218,7 +219,7 @@ namespace B2CWebApp.Services.Impl
                         Quantity = c.Quantity,
                         ProductType = _context.ProductTypes.Find(product.ProductTypeId).Name,
                         Capacity = product.ProductCapacity.Name,
-                        //ProductImage = product.ProductImages.FirstOrDefault(c => c == c).ImgPath
+                        ProductImage = product.ProductImages.FirstOrDefault(c => c == c).ImgPath
                     };
                     carts.Add(cartViewModel);
                     totalPrice += c.Price;
