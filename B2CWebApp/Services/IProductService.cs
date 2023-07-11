@@ -1,4 +1,4 @@
-﻿using B2CWebApp.ViewModel;
+﻿using B2CWebApp.Models.ViewModel;
 
 namespace B2CWebApp.Services
 {

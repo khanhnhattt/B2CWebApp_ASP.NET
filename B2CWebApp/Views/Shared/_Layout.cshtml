@@ -16,20 +16,23 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid" style=" padding: 0 500px">
+            <div class="container-fluid" style=" padding: 0 450px">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">B2CWebApp</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <form action="/Product/Search">
-                    <div class="input-group navbar-collapse collapse">
-                        <div class="form-outline">
-                            <input type="search" id="product" class="form-control" name="search"/>
+                <form action="/Product/Search" class="row">
+                    <div class="col-md-8 col-lg-7 p-0">
+                        <div class="input-group">
+                            <input type="search" id="product" class="form-control" name="search" placeholder="Search"/>
                         </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                    <div class="col-md-4 col-lg-5 px-1">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
                     </div>
                 </form>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-center">
                         <li class="nav-item">

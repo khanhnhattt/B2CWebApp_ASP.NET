@@ -1,9 +1,14 @@
-﻿using B2CWebApp.ViewModel;
+﻿using B2CWebApp.Models.Enums;
+using B2CWebApp.Models.ViewModel;
 
 namespace B2CWebApp.Services
 {
-    internal interface ICartService
+    public interface ICartService
     {
         List<CartViewModel> ViewCart(string userId);
+        CheckoutViewModel ViewCheckout(string userId);
+        string PlaceOrder(PaymentMethod paymentMethod, string userId);
+        List<OrdersViewModel> ViewOrders(string userId);
+        OrderDetailViewModel ViewOrderDetailById(string id, string userId);
     }
 }

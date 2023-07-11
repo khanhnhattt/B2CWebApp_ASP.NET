@@ -1,6 +1,6 @@
 ﻿using B2CWebApp.Models;
+using B2CWebApp.Models.ViewModel;
 using B2CWebApp.Repositories;
-using B2CWebApp.ViewModel;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace B2CWebApp.Services.Impl
@@ -9,8 +9,6 @@ namespace B2CWebApp.Services.Impl
     {
         B2cContext _context = new B2cContext();
         private readonly IProductRepository _productRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ICartRepository _cartRepository;
 
         public ProductService(IProductRepository productRepository)
         {

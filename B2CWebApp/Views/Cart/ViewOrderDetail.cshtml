@@ -1,0 +1,74 @@
+﻿<div class="container py-2 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-10 col-xl-8">
+            <div class="card" style="border-radius: 10px;">
+                <div class="card-header px-4 py-5 d-flex justify-content-between">
+                    <h5 class="text-muted mb-0">Order Detail</h5>
+                    <strong>@ViewBag.order.OrderStatus</strong>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <p class="lead fw-normal mb-0">Cart</p>
+                    </div>
+
+                    @foreach (var c in ViewBag.order.Carts)
+                    {
+                        <div class="card shadow-0 border mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
+                                             class="img-fluid" alt="Product Image">
+                                    </div>
+                                    <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0">@c.ProductName</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">Capacity: @c.Capacity</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">Qty: @c.Quantity</p>
+                                    </div>
+                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <p class="text-muted mb-0 small">$@c.Price</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <p class="fw-bold mb-0">Order Details</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <p class="text-muted mb-0">Invoice Number : @ViewBag.order.InvoiceNumber</p>
+                        <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $@ViewBag.order.TotalPrice.00</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="text-muted mb-0">Invoice Date : @ViewBag.order.OrderTime</p>
+                        <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $0.00</p>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="text-muted mb-0">Address : @ViewBag.order.Address</p>
+                        <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                    </div>
+                    <div class="d-flex justify-content-between mb-5">
+                        <p class="text-muted mb-0">Tel: @ViewBag.order.Tel</p>
+                    </div>
+                </div>
+                <div class="card-footer border-0 px-4 py-5"
+                     style="background-color: #ddd; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                    <h5 class="d-flex align-items-center justify-content-end text-muted text-uppercase mb-0">
+                        Total
+                        paid: <span class="h2 mb-0 ms-2">$@ViewBag.order.TotalPrice.00</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.ConstrainedExecution;
-using B2CWebApp.DTOs;
 using B2CWebApp.Models;
+using B2CWebApp.Models.ViewModel;
 using B2CWebApp.Services;
 using B2CWebApp.Services.Impl;
 using Microsoft.AspNetCore.Authentication;

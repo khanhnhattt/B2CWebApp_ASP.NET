@@ -1,5 +1,5 @@
-﻿using B2CWebApp.DTOs;
-using B2CWebApp.Models;
+﻿using B2CWebApp.Models;
+using B2CWebApp.Models.ViewModel;
 
 namespace B2CWebApp.Services
 {

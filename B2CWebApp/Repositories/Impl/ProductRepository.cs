@@ -1,5 +1,5 @@
 ﻿using B2CWebApp.Models;
-using B2CWebApp.ViewModel;
+using B2CWebApp.Models.ViewModel;
 using System.Collections.Generic;
 
 namespace B2CWebApp.Repositories.Impl

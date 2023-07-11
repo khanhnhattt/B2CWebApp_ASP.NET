@@ -1,5 +1,5 @@
-﻿using B2CWebApp.Services;
-using B2CWebApp.ViewModel;
+﻿using B2CWebApp.Models.ViewModel;
+using B2CWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace B2CWebApp.Controllers

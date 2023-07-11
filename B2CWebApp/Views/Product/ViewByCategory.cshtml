@@ -10,7 +10,7 @@
             @foreach (var item in ViewBag.products)
             {
                 <a class="text-decoration-none col-md-3 text-center card" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
-                        <img class="img-fluid" src="../Contents/14p.jpg" alt="iPhone 14 Pro" />
+                        <img class="img-fluid" src="~/images/14p.jpg" alt="iPhone 14 Pro" />
                         <div class="card-body">
                             <h5 class="card-title">@item.Name</h5>
                             <p class="card-text">@item.Price</p>

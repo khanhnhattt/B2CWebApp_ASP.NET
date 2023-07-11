@@ -1,4 +1,4 @@
-﻿namespace B2CWebApp.DTOs
+﻿namespace B2CWebApp.Models.ViewModel
 {
     public class RegisterDTO
     {

@@ -1,5 +1,4 @@
-﻿using B2CWebApp.DTOs;
-using B2CWebApp.Models;
+﻿using B2CWebApp.Models;
 using B2CWebApp.Repositories.Impl;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using B2CWebApp.Repositories;
 using Microsoft.AspNetCore.Identity;
+using B2CWebApp.Models.ViewModel;
 
 namespace B2CWebApp.Services.Impl
 {
@@ -52,7 +52,7 @@ namespace B2CWebApp.Services.Impl
             }
             catch (Exception e)
             {
-                return "Register Error";
+                return "Register Error: "+e;
             }
 
 

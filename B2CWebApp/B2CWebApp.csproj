@@ -25,4 +25,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\14p.jpg" />
+  </ItemGroup>
+
 </Project>
