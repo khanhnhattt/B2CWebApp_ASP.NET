@@ -36,19 +36,18 @@
                 <div class="col text-right">$ @ViewBag.checkout.TotalPrice</div>
             </div>
             <form asp-controller="Cart" asp-action="PlaceOrder" method="post">
+                <p>ADDRESS</p>
+                <input type="text" name="address" value="@ViewBag.checkout.Address" />
+                <p>TEL</p>
+                <input type="text" name="tel" value="@ViewBag.checkout.Tel"/>
                 <p>PAYMENT METHOD</p>
                 <select name="method">
                     <option class="text-muted" value="VISA">VISA</option>
                     <option class="text-muted" value="INTERNET_BANKING">INTERNET BANKING</option>
                     <option class="text-muted" value="COD">COD</option>
                 </select>
-                <button type="submit" class="btn" >PLACE ORDER</button>
+                <button type="submit" class="btn">PLACE ORDER</button>
             </form>
-       @*     <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">$ @ViewBag.checkout.TotalPrice</div>
-            </div>
-            <button class="btn" asp-controller="Cart" asp-action="PlaceOrder">PLACE ORDER</button>*@
         </div>
     </div>
 

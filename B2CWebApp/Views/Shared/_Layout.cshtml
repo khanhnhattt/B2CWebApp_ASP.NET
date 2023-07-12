@@ -49,11 +49,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewCart">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewOrders">Order</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -76,6 +74,12 @@
                         </li>
                         <li class="category nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="ViewByCategory" asp-route-cate="5">Accessories</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewCart">Cart</a>
+                        </li>
+                        <li class="category nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="ViewOrders">Order</a>
                         </li>
                     </ul>
                 </div>

@@ -4,7 +4,7 @@
     {
         public List<CartViewModel> CartViewModels { get; set; }
         public long TotalPrice { get; set; }
-        public string Addres { get; set; }
+        public string Address { get; set; }
         public string Tel { get; set; }
     }
 }

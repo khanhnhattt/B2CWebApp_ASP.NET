@@ -21,20 +21,30 @@ namespace B2CWebApp.Controllers
             B2cContext context = new B2cContext();
             List<HomeViewModel> list = new List<HomeViewModel>();
             
-            List<ProductType> productTypes = context.ProductTypes.Include(pt => pt.Products).ToList();
+            List<ProductType> productTypes = context.ProductTypes.Include(pt => pt.Products.Take(4)).ToList();
 
             foreach (ProductType productType in productTypes)
             {
-                foreach
+                List<HomeProductViewModel> productsViewModels = new List<HomeProductViewModel>();
+                foreach (var p in productType.Products)
+                {   
+                    productsViewModels.Add(new HomeProductViewModel()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        ImgPath = context.ProductImages.Where(img => img.ProductId == p.Id).FirstOrDefault().ImgPath,
+                        Price = p.Price
+                    });
+                }
 
                 list.Add(new HomeViewModel
                 {
-                    ProductTypeId = productType.Id, 
-                    ProductName = productType.Products.,
+                    ProductTypeId = productType.Id,
                     ProductTypeName = productType.Name,
-
+                    Products = productsViewModels
                 });
             }
+            ViewBag.productTypes = list;
 
             return View();
         }

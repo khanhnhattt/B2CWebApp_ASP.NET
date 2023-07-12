@@ -25,15 +25,19 @@
                     <h4 class="price">PRICE: <span>$@ViewBag.product.Price</span></h4>
                     <br /><br />
                     <h5 class="sizes">
-                        Capacity:
-                        @foreach (var c in ViewBag.product.Capacities)
+
+                        @if (ViewBag.product.Capacities != null)
                         {
-                            <span class="size" data-toggle="tooltip" title="small">@c</span>
+                            <p>Capacity:</p>
+                            @foreach (var c in ViewBag.product.Capacities)
+                            {
+                                <span class="size" data-toggle="tooltip" title="small">@c</span>
+                            }
                         }
                     </h5>
                     <form asp-controller="Product" asp-action="AddToCart" method="post">
-                        <input type="hidden" value="@ViewBag.product.Id" name="id"/>
-                        <input type="hidden" name="quantity" value="1"/>
+                        <input type="hidden" value="@ViewBag.product.Id" name="id" />
+                        <input type="hidden" name="quantity" value="1" />
                         <div class="action align-bottom">
                             <button class="add-to-cart btn" type="submit">add to cart</button>
                         </div>

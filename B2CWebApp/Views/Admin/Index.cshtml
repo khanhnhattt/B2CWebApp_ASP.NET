@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Razor.Language.Extensions
+@model IEnumerable<B2CWebApp.Models.ViewModel.AdminOrdersViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Order List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentStatus)
+                </td>
+                <td>
+                    <form id="form @item.Id" asp-controller="Admin" asp-action="ChangeOrderStatus" method="post">
+                        <input type="hidden" name="orderId" value="@item.Id" />
+                        <select name="orderStatus" asp-for="@item.OrderStatus" onchange="document.getElementById('form @item.Id').submit()">
+                            <option value="UNCONFIRMED" >UNCONFIRMED</option>
+                            <option value="IN_PROCESS">IN_PROCESS</option>
+                            <option value="DELIVERY" >DELIVERY</option>
+                            <option value="DONE" >DONE</option>
+                            <option value="CANCELLED">CANCELLED</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

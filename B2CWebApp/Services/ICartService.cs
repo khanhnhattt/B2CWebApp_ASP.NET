@@ -7,7 +7,7 @@ namespace B2CWebApp.Services
     {
         List<CartViewModel> ViewCart(string userId);
         CheckoutViewModel ViewCheckout(string userId);
-        string PlaceOrder(PaymentMethod paymentMethod, string userId);
+        string PlaceOrder(PaymentMethod paymentMethod, string address, string userId, string tel);
         List<OrdersViewModel> ViewOrders(string userId);
         OrderDetailViewModel ViewOrderDetailById(string id, string userId);
     }

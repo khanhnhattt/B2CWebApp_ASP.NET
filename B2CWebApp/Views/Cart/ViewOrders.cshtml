@@ -3,34 +3,41 @@
     <div class="container h-100">
         <div class="row d-flex justify-content-center h-100">
             <div class="col-12">
-                @foreach (var order in ViewBag.orders)
+                @if (ViewBag.orders != null)
                 {
+                    @foreach (var order in ViewBag.orders)
+                    {
 
-                    <div class="card card-stepper text-black mb-3" style="border-radius: 16px; background-color: #ddd; color: rgb(65, 65, 65);">
+                        <div class="card card-stepper text-black mb-3" style="border-radius: 16px; background-color: #ddd; color: rgb(65, 65, 65);">
 
-                        <div class="card-body p-5">
+                            <div class="card-body p-5">
 
-                            <div class="d-flex justify-content-between align-items-center mb-5">
-                                <div>
-                                    <p class="mb-0">INVOICE <strong class="">@order.InvoiceNumber</strong></p>
+                                <div class="d-flex justify-content-between align-items-center mb-5">
+                                    <div>
+                                        <p class="mb-0">INVOICE <strong class="">@order.InvoiceNumber</strong></p>
+                                    </div>
+                                    <div class="text-end">
+                                        <p class="mb-0">Order Time <span>@order.OrderTime</span></p>
+                                        @*<p class="mb-0">USPS <span class="font-weight-bold">234094567242423422898</span></p>*@
+                                    </div>
                                 </div>
-                                <div class="text-end">
-                                    <p class="mb-0">Order Time <span>@order.OrderTime</span></p>
-                                    @*<p class="mb-0">USPS <span class="font-weight-bold">234094567242423422898</span></p>*@
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-0">ORDER STATUS <strong class="text">@order.OrderStatus</strong></p>
+                                    </div>
+                                    <div class="text-end">
+                                        <a class="btn" asp-controller="Cart" asp-action="ViewOrderDetail" asp-route-id="@order.Id">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="mb-0">ORDER STATUS <strong class="text">@order.OrderStatus</strong></p>
-                                </div>
-                                <div class="text-end">
-                                    <a class="btn" asp-controller="Cart" asp-action="ViewOrderDetail" asp-route-id="@order.Id">View Details</a>
-                                </div>
-                            </div>
+
                         </div>
 
-                    </div>
-
+                    }
+                }
+                else
+                {
+                    <h4 class="text-center m-4">No order yet!</h4>
                 }
             </div>
         </div>

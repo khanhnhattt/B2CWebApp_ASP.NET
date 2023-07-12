@@ -69,14 +69,14 @@ namespace B2CWebApp.Services.Impl
             {
                 CartViewModels = carts,
                 TotalPrice = totalPrice,
-                Addres = user.Address,
+                Address = user.Address,
                 Tel = user.Tel
             };
 
             return checkoutViewModel;
         }
 
-        public string PlaceOrder(PaymentMethod paymentMethod, string userId)
+        public string PlaceOrder(PaymentMethod paymentMethod, string address, string userId, string tel)
         {
             // Get user
             long uId = long.Parse(userId);
@@ -106,8 +106,8 @@ namespace B2CWebApp.Services.Impl
             Order order = new Order()
             {
                 OrderTime = DateTime.Now,
-                Address = user.Address,
-                Tel = user.Tel,
+                Address = address,
+                Tel = tel,
                 //UserNavigation = user,
                 User = uId,
                 Carts = cartList,
@@ -210,7 +210,7 @@ namespace B2CWebApp.Services.Impl
                 List<CartViewModel> carts = new List<CartViewModel>();
                 foreach (var c in o.Carts)
                 {
-                    Product product = _context.Products.Include(p => p.ProductCapacity).FirstOrDefault(p => p.Id == c.ProductId);
+                    Product product = _context.Products.Include(p => p.ProductCapacity).Include(p => p.ProductImages).FirstOrDefault(p => p.Id == c.ProductId);
                     CartViewModel cartViewModel = new CartViewModel()
                     {
                         CartId = c.Id,

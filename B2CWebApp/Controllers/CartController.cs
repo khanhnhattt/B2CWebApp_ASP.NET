@@ -44,6 +44,8 @@ namespace B2CWebApp.Controllers
         [HttpPost]
         public IActionResult PlaceOrder(IFormCollection collection)
         {
+            string address = collection["address"];
+            string tel = collection["tel"];
             string method = collection["method"];
             string userId = HttpContext.Session.GetString("u");
             if (userId == null)
@@ -53,7 +55,7 @@ namespace B2CWebApp.Controllers
 
             PaymentMethod paymentMethod = (PaymentMethod) Enum.Parse(typeof(PaymentMethod), method, true);
 
-            string message = _cartService.PlaceOrder(paymentMethod, userId);
+            string message = _cartService.PlaceOrder(paymentMethod, address, userId, tel);  
 
             return RedirectToAction("ViewOrders", "Cart");
         }

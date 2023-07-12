@@ -14,6 +14,7 @@ namespace B2CWebApp.Services.Impl
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly B2cContext _context = new B2cContext();
 
         public AuthService(IConfiguration configuration, IUserRepository userRepository)
         {
@@ -38,9 +39,27 @@ namespace B2CWebApp.Services.Impl
 
         public string addUser(User user)
         {
+            User checkUsername = _context.Users.FirstOrDefault(u => u.Username == user.Username);
+            if (checkUsername != null)
+            {
+                return "Username duplicated";
+            }
+
+            User checkMail = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (checkMail != null)
+            {
+                return "Email duplicated";
+            }
+
             try
             {
                 _userRepository.add(user);
+                _context.UserRoles.Add(new UserRole()
+                {
+                    RoleId = 2,
+                    UserId = user.Id
+                });
+                _context.SaveChanges();
                 return null;
             }
             catch (Exception e)
